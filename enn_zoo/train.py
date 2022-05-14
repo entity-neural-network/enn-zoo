@@ -12,6 +12,7 @@ from enn_trainer.train import State, initialize, train
 from entity_gym.env import *
 from entity_gym.examples import ENV_REGISTRY
 from hyperstate import StateManager
+from rogue_net.rogue_net import RogueNet, RogueNetConfig
 
 from enn_zoo import griddly_env
 from enn_zoo.codecraft.cc_vec_env import CodeCraftVecEnv
@@ -23,7 +24,6 @@ from enn_zoo.procgen_env.boss_fight import BossFight
 from enn_zoo.procgen_env.leaper import Leaper
 from enn_zoo.procgen_env.plunder import Plunder
 from enn_zoo.procgen_env.star_pilot import StarPilot
-from rogue_net.rogue_net import RogueNet, RogueNetConfig
 
 
 @dataclass

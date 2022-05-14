@@ -1,5 +1,6 @@
 // Achieves ~0.2 eval/episodic_reward.mean: https://wandb.ai/entity-neural-network/enn-ppo/reports/Arena-Tiny-2v2-baseline--VmlldzoxNzgwMTQ3
 ExperimentConfig(
+    version: 1,
     env: (
         id: "CodeCraft",
         kwargs: "{\"objective\": \"ARENA_TINY_2V2\"}",
