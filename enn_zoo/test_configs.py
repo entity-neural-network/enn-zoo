@@ -2,12 +2,7 @@ from os import listdir
 from pathlib import Path
 
 import hyperstate
-from hyperstate.schema.schema_change import Severity
-from hyperstate.schema.schema_checker import SchemaChecker
-from hyperstate.schema.types import load_schema
-
 from enn_trainer.config import TrainConfig
-
 
 
 def test_configs() -> None:
