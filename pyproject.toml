@@ -17,6 +17,7 @@ procgen = "^0.10.7"
 opensimplex = "^0.4.2"
 numba = "^0.55.1"
 enn-trainer = "^0.1.0"
+gym-microrts = "0.6.0"
 
 [tool.poetry.dev-dependencies]
 pre-commit = "^2.19.0"
