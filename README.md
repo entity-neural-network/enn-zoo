@@ -52,3 +52,7 @@ xvfb-run -a poetry run python enn_zoo/train.py \
     eval.steps=2000 \
     eval.num_envs=1
 ```
+
+Here is a [tracked Gym-µRTS experiment](https://wandb.ai/entity-neural-network/enn-ppo/runs/1vpdd0cm?workspace=user-costa-huang), which has a trained agent that behaves as follows:
+
+https://user-images.githubusercontent.com/5555347/175696804-e151a790-5324-45f1-9f2f-6f1f885a6e35.mp4
