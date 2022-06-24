@@ -8,7 +8,7 @@ import hyperstate
 import torch
 import web_pdb
 from enn_trainer.agent import PPOAgent
-from enn_trainer.train import State, initialize, train
+from enn_trainer.train import State, init_train_state, train
 from entity_gym.env import *
 from entity_gym.examples import ENV_REGISTRY
 from hyperstate import StateManager
@@ -65,7 +65,7 @@ def load_codecraft_policy(
         return CCNetAdapter(str(device), load_from=path)
 
 
-@hyperstate.stateful_command(TrainConfig, State, initialize)
+@hyperstate.stateful_command(TrainConfig, State, init_train_state)
 def main(state_manager: StateManager) -> None:
     cfg = state_manager.config
     if cfg.env.id in ENV_REGISTRY:
