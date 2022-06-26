@@ -33,5 +33,26 @@ libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-d
 ## Usage
 
 ```
-poetry run enn_zoo/train.py
+poetry run python enn_zoo/train.py
 ```
+
+### Gym-µRTS
+
+[Gym-µRTS](https://github.com/vwxyzjn/gym-microrts) is a Reinforcement Learning environment for the popular Real-time Strategy game simulator μRTS. To get started, run the following command:
+
+```python
+xvfb-run -a poetry run python enn_zoo/train.py \
+    env.id=GymMicrorts \
+    rollout.num_envs=24 \
+    total_timesteps=1000000 \
+    rollout.steps=256 \
+    track=true \
+    eval.capture_videos=True \
+    eval.interval=300000 \
+    eval.steps=2000 \
+    eval.num_envs=1
+```
+
+Here is a [tracked Gym-µRTS experiment](https://wandb.ai/entity-neural-network/enn-ppo/runs/1vpdd0cm?workspace=user-costa-huang), which has a trained agent that behaves as follows:
+
+https://user-images.githubusercontent.com/5555347/175696804-e151a790-5324-45f1-9f2f-6f1f885a6e35.mp4
