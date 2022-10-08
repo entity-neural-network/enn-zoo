@@ -41,7 +41,7 @@ XpV0(
                     ],
                     target_dir: "/root/enn-zoo",
                     cd: true,
-                    rev: "00fd7b6",
+                    rev: "bb62035",
                 ),
 
                 // Build xprun from source

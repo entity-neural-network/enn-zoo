@@ -1,3 +1,4 @@
+import argparse
 import struct
 from dataclasses import dataclass
 from typing import List, TypeVar
@@ -416,14 +417,19 @@ def print_coinrun_grid(grid: Grid) -> None:
     # const int CRATE = 20;
     SYMBOLS = {
         1: "G",
-        2: "S",
+        2: "s",
         3: "S",
+        5: "W",
+        14: "X",
         15: "W",
         16: "W",
         17: "L",
         18: "L",
         19: "B",
+        20: "W",
+        51: "W",
         100: " ",
+        1002: ".",
         4096: "x",
     }
     for y in reversed(range(grid.h)):
@@ -440,8 +446,12 @@ if __name__ == "__main__":
 
     from procgen import ProcgenGym3Env
 
+    args = argparse.ArgumentParser()
+    args.add_argument("--env_name", type=str, default="coinrun")
+    args = args.parse_args()
+
     env = ProcgenGym3Env(
-        num=1, env_name="bigfish", start_level=random.randint(0, 1000), num_levels=1000
+        num=1, env_name=args.env_name, start_level=random.randint(0, 1000), num_levels=1000
     )
     states = env.callmethod("get_state")
 

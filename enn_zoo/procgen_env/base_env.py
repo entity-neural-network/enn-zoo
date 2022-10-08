@@ -132,7 +132,7 @@ class BaseEnv(Environment):
                     (0, feats.shape[1] + global_feats.shape[1]), dtype=np.float32
                 )
             entities[name] = feats
-        assert total == state.entities.shape[0]
+        assert total == state.entities.shape[0], f"Not all entities were accounted for: self._entity_types.keys()={self._entity_types().keys()}, state.entities[:, 6]={state.entities[:, 6]}"
 
         return Observation(
             entities=entities,
