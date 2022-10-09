@@ -178,12 +178,12 @@ class BaseEnv(Environment):
                 .reshape(25, 25 * len(self._tile_idx_to_id))
             )
             xs = (
-                (np.arange(5) * 5 + 2.5 + center_x - 12)
+                (np.arange(5, dtype=np.float32) * 5 + 2.5 + center_x - 12)
                 .reshape(1, 5, 1)
                 .repeat(5, axis=0)
             ).reshape(25, 1)
             ys = (
-                (np.arange(5) * 5 + 2.5 + center_x - 12)
+                (np.arange(5, dtype=np.float32) * 5 + 2.5 + center_x - 12)
                 .reshape(5, 1, 1)
                 .repeat(5, axis=1)
             ).reshape(25, 1)
