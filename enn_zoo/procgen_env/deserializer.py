@@ -24,10 +24,10 @@ class ByteBuffer:
         return self.read(elem_size * self.read_int())
 
     def read_float_array(self) -> npt.NDArray[np.float32]:
-        return np.frombuffer(self.read_array(elem_size=4), dtype=np.float32)  # type: ignore
+        return np.frombuffer(self.read_array(elem_size=4), dtype=np.float32)
 
     def read_int_array(self) -> npt.NDArray[np.int32]:
-        return np.frombuffer(self.read_array(elem_size=4), dtype=np.int32)  # type: ignore
+        return np.frombuffer(self.read_array(elem_size=4), dtype=np.int32)
 
     def read_str(self) -> str:
         return self.read_array(elem_size=1).decode("utf-8")
@@ -446,9 +446,9 @@ if __name__ == "__main__":
 
     from procgen import ProcgenGym3Env
 
-    args = argparse.ArgumentParser()
-    args.add_argument("--env_name", type=str, default="coinrun")
-    args = args.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--env_name", type=str, default="coinrun")
+    args = parser.parse_args()
 
     env = ProcgenGym3Env(
         num=1,

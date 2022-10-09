@@ -69,7 +69,7 @@ class BaseEnv(Environment):
     def _tile_types(self) -> Optional[Dict[int, str]]:
         return None
 
-    def _init_tiles(self):
+    def _init_tiles(self) -> None:
         tile_types = self._tile_types()
         if tile_types is None:
             return
@@ -83,14 +83,15 @@ class BaseEnv(Environment):
                 for entity_type in self._entity_types().values()
             },
         }
-        if self._tile_types() is not None:
+        tile_types = self._tile_types()
+        if tile_types is not None:
             entities["Tiles"] = Entity(
                 features=["x", "y"]
                 + [
                     f"{x},{y}={tiletype}"
                     for x in range(5)
                     for y in range(5)
-                    for tiletype in self._tile_types().values()
+                    for tiletype in tile_types.values()
                 ]
             )
         return ObsSpace(entities=entities)

@@ -3,7 +3,7 @@ from typing import Dict, List
 from enn_zoo.procgen_env.base_env import BaseEnv
 from enn_zoo.procgen_env.deserializer import ByteBuffer
 
-CAVE_FLYER_FEATS = []
+CAVE_FLYER_FEATS: List[str] = []
 
 
 class CaveFlyer(BaseEnv):
