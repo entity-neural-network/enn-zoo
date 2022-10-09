@@ -7,6 +7,7 @@ from enn_zoo.procgen_env.coinrun import CoinRun
 from enn_zoo.procgen_env.dodgeball import Dodgeball
 from enn_zoo.procgen_env.fruitbot import FruitBot
 from enn_zoo.procgen_env.heist import Heist
+from enn_zoo.procgen_env.jumper import Jumper
 from enn_zoo.procgen_env.leaper import Leaper
 from enn_zoo.procgen_env.plunder import Plunder
 from enn_zoo.procgen_env.star_pilot import StarPilot
@@ -21,6 +22,7 @@ PROCGEN_ENVS = {
     "Dodgeball": Dodgeball,
     "FruitBot": FruitBot,
     "Heist": Heist,
+    "Jumper": Jumper,
     "Leaper": Leaper,
     "Plunder": Plunder,
     "StarPilot": StarPilot,
