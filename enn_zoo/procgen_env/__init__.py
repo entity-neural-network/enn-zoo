@@ -9,6 +9,7 @@ from enn_zoo.procgen_env.fruitbot import FruitBot
 from enn_zoo.procgen_env.heist import Heist
 from enn_zoo.procgen_env.jumper import Jumper
 from enn_zoo.procgen_env.leaper import Leaper
+from enn_zoo.procgen_env.maze import Maze
 from enn_zoo.procgen_env.plunder import Plunder
 from enn_zoo.procgen_env.star_pilot import StarPilot
 
@@ -24,6 +25,7 @@ PROCGEN_ENVS = {
     "Heist": Heist,
     "Jumper": Jumper,
     "Leaper": Leaper,
+    "Maze": Maze,
     "Plunder": Plunder,
     "StarPilot": StarPilot,
 }
