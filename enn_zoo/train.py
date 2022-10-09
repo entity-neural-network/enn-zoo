@@ -19,11 +19,7 @@ from enn_zoo.codecraft.cc_vec_env import CodeCraftVecEnv
 from enn_zoo.codecraft.codecraftnet.adapter import CCNetAdapter
 from enn_zoo.griddly_env import GRIDDLY_ENVS
 from enn_zoo.microrts import GymMicrorts
-from enn_zoo.procgen_env.big_fish import BigFish
-from enn_zoo.procgen_env.boss_fight import BossFight
-from enn_zoo.procgen_env.leaper import Leaper
-from enn_zoo.procgen_env.plunder import Plunder
-from enn_zoo.procgen_env.star_pilot import StarPilot
+from enn_zoo.procgen_env import PROCGEN_ENVS
 
 
 @dataclass
@@ -78,19 +74,11 @@ def main(state_manager: StateManager) -> None:
         env = create_cc_env
     elif cfg.env.id == "GymMicrorts":
         env = GymMicrorts
-    elif cfg.env.id.startswith("Procgen"):
-        if cfg.env.id == "Procgen:BigFish":
-            env = BigFish
-        elif cfg.env.id == "Procgen:BossFight":
-            env = BossFight
-        elif cfg.env.id == "Procgen:StarPilot":
-            env = StarPilot
-        elif cfg.env.id == "Procgen:Leaper":
-            env = Leaper
-        elif cfg.env.id == "Procgen:Plunder":
-            env = Plunder
-        else:
-            raise NotImplementedError(f"Unknown procgen env: {cfg.env.id}")
+    elif cfg.env.id.startswith("Procgen:"):
+        env_name = cfg.env.id.split(":")[1]
+        if env_name not in PROCGEN_ENVS:
+            raise ValueError(f"Unknown procgen env: {cfg.env.id}")
+        env = PROCGEN_ENVS[env_name]
     else:
         try:
             from enn_zoo import vizdoom_env

@@ -37,10 +37,11 @@ XpV0(
                     paths: [
                         "pyproject.toml",
                         "poetry.lock",
+                        "enn_zoo/__init__.py"
                     ],
                     target_dir: "/root/enn-zoo",
                     cd: true,
-                    rev: "00fd7b6",
+                    rev: "bb62035",
                 ),
 
                 // Build xprun from source

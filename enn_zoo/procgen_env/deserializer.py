@@ -1,3 +1,4 @@
+import argparse
 import struct
 from dataclasses import dataclass
 from typing import List, TypeVar
@@ -23,10 +24,10 @@ class ByteBuffer:
         return self.read(elem_size * self.read_int())
 
     def read_float_array(self) -> npt.NDArray[np.float32]:
-        return np.frombuffer(self.read_array(elem_size=4), dtype=np.float32)  # type: ignore
+        return np.frombuffer(self.read_array(elem_size=4), dtype=np.float32)
 
     def read_int_array(self) -> npt.NDArray[np.int32]:
-        return np.frombuffer(self.read_array(elem_size=4), dtype=np.int32)  # type: ignore
+        return np.frombuffer(self.read_array(elem_size=4), dtype=np.int32)
 
     def read_str(self) -> str:
         return self.read_array(elem_size=1).decode("utf-8")
@@ -416,14 +417,19 @@ def print_coinrun_grid(grid: Grid) -> None:
     # const int CRATE = 20;
     SYMBOLS = {
         1: "G",
-        2: "S",
+        2: "s",
         3: "S",
+        5: "W",
+        14: "X",
         15: "W",
         16: "W",
         17: "L",
         18: "L",
         19: "B",
+        20: "W",
+        51: "W",
         100: " ",
+        1002: ".",
         4096: "x",
     }
     for y in reversed(range(grid.h)):
@@ -440,8 +446,15 @@ if __name__ == "__main__":
 
     from procgen import ProcgenGym3Env
 
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--env_name", type=str, default="coinrun")
+    args = parser.parse_args()
+
     env = ProcgenGym3Env(
-        num=1, env_name="bigfish", start_level=random.randint(0, 1000), num_levels=1000
+        num=1,
+        env_name=args.env_name,
+        start_level=random.randint(0, 1000),
+        num_levels=1000,
     )
     states = env.callmethod("get_state")
 

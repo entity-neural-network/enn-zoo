@@ -194,7 +194,7 @@ class GymMicrorts(Environment):
         if "mode" in kwargs and kwargs["mode"] == "rgb_array":
             bytes_array = np.array(self.client.render(True))
             image = Image.frombytes("RGB", (640, 640), bytes_array)
-            return np.array(image)[:, :, ::-1]  # type: ignore
+            return np.array(image)[:, :, ::-1]
         else:
             return self.client.render(False)  # type: ignore
 
