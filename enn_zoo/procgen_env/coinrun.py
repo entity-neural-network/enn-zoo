@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from enn_zoo.procgen_env.base_env import BaseEnv
 from enn_zoo.procgen_env.deserializer import ByteBuffer
@@ -21,6 +21,7 @@ COINRUN_FEATS = [
     "gravity",
     "air_control",
 ]
+
 
 class CoinRun(BaseEnv):
     def __init__(self, distribution_mode: str = "hard") -> None:
@@ -57,4 +58,20 @@ class CoinRun(BaseEnv):
             7: "Enemy2",
             20: "Crate",
             59: "???",
+        }
+
+    def _tile_types(self) -> Optional[Dict[int, str]]:
+        # const int WALL_MID = 15;
+        # const int WALL_TOP = 16;
+        # const int LAVA_MID = 17;
+        # const int LAVA_TOP = 18;
+        # const int ENEMY_BARRIER = 19;
+        return {
+            1: "Goal",
+            15: "WallMid",
+            16: "WallTop",
+            17: "LavaMid",
+            18: "LavaTop",
+            19: "EnemyBarrier",
+            100: "Empty",
         }

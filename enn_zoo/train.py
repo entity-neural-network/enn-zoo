@@ -12,6 +12,7 @@ from enn_trainer.train import State, init_train_state, train
 from entity_gym.env import *
 from entity_gym.examples import ENV_REGISTRY
 from hyperstate import StateManager
+from procgen_env import PROCGEN_ENVS
 from rogue_net.rogue_net import RogueNet, RogueNetConfig
 
 from enn_zoo import griddly_env
@@ -19,7 +20,6 @@ from enn_zoo.codecraft.cc_vec_env import CodeCraftVecEnv
 from enn_zoo.codecraft.codecraftnet.adapter import CCNetAdapter
 from enn_zoo.griddly_env import GRIDDLY_ENVS
 from enn_zoo.microrts import GymMicrorts
-from procgen_env import PROCGEN_ENVS
 
 
 @dataclass

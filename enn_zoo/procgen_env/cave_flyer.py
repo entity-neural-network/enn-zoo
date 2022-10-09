@@ -5,6 +5,7 @@ from enn_zoo.procgen_env.deserializer import ByteBuffer
 
 CAVE_FLYER_FEATS = []
 
+
 class CaveFlyer(BaseEnv):
     def __init__(self, distribution_mode: str = "hard") -> None:
         super().__init__("caveflyer", distribution_mode)

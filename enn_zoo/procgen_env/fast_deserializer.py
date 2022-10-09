@@ -9,8 +9,11 @@ from enn_zoo.procgen_env.deserializer import ByteBuffer, Entity, ProcgenGame, St
 @dataclass
 class MinimalProcgenState:
     step_data: StepData
-    grid_size: int
     entities: npt.NDArray[np.float32]
+    grid_size: int
+    grid_width: int
+    grid_height: int
+    grid: npt.NDArray[np.int32]
 
     @classmethod
     def from_bytes(cls, data: ByteBuffer) -> "MinimalProcgenState":
@@ -27,7 +30,14 @@ class MinimalProcgenState:
         # grid
         w = data.read_int()
         h = data.read_int()
-        size = data.read_int()
+        grid = data.read_int_array().reshape((w, h))
+        size = grid.shape[0] * grid.shape[1]
         assert w * h == size == grid_size
-        data.offset += 4 * w * h
-        return cls(step_data, grid_size, entities)
+        return cls(
+            step_data=step_data,
+            entities=entities,
+            grid_size=grid_size,
+            grid_width=w,
+            grid_height=h,
+            grid=grid,
+        )

@@ -451,7 +451,10 @@ if __name__ == "__main__":
     args = args.parse_args()
 
     env = ProcgenGym3Env(
-        num=1, env_name=args.env_name, start_level=random.randint(0, 1000), num_levels=1000
+        num=1,
+        env_name=args.env_name,
+        start_level=random.randint(0, 1000),
+        num_levels=1000,
     )
     states = env.callmethod("get_state")
 
