@@ -177,11 +177,17 @@ class BaseEnv(Environment):
                 .transpose(0, 2, 1, 3, 4)
                 .reshape(25, 25 * len(self._tile_idx_to_id))
             )
-            positions = np.zeros((5, 5, 2), dtype=np.float32)
-            positions[:, :, 0] = np.arange(5) * 5 + 2.5 + center_x - 12
-            positions[:, :, 1] = np.arange(5) * 5 + 2.5 + center_y - 12
-            positions = positions.reshape(25, 2)
-            tile_entities = np.concatenate([positions, tilemap], axis=1)
+            xs = (
+                (np.arange(5) * 5 + 2.5 + center_x - 12)
+                .reshape(1, 5, 1)
+                .repeat(5, axis=0)
+            ).reshape(25, 1)
+            ys = (
+                (np.arange(5) * 5 + 2.5 + center_x - 12)
+                .reshape(5, 1, 1)
+                .repeat(5, axis=1)
+            ).reshape(25, 1)
+            tile_entities = np.concatenate([xs, ys, tilemap], axis=1)
             entities["Tiles"] = tile_entities
         assert (
             total == state.entities.shape[0]
