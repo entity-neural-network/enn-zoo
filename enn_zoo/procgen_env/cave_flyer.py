@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 
 from enn_zoo.procgen_env.base_env import BaseEnv
 from enn_zoo.procgen_env.deserializer import ByteBuffer
@@ -23,8 +23,13 @@ class CaveFlyer(BaseEnv):
             3: "Target",
             4: "PlayerBullet",
             5: "Enemy",
-            8: "CaveWall",
             9: "Exhaust",
             54: "???",
             1003: "Marker",
+        }
+
+    def _tile_types(self) -> Optional[Dict[int, str]]:
+        return {
+            8: "CaveWall",
+            100: "Empty",
         }

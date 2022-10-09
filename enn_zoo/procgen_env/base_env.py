@@ -158,12 +158,12 @@ class BaseEnv(Environment):
             center_y = round(y - 0.5)
             if center_x < 12:
                 center_x = 12
-            if center_x + 12 > state.grid_width:
-                center_x = state.grid_width - 12
+            if center_x + 13 >= state.grid_width:
+                center_x = state.grid_width - 13
             if center_y < 12:
                 center_y = 12
-            if center_y + 12 > state.grid_height:
-                center_y = state.grid_height - 12
+            if center_y + 13 > state.grid_height:
+                center_y = state.grid_height - 13
             tilemap = np.zeros((25, 25, len(self._tile_idx_to_id)), dtype=np.float32)
             subgrid = state.grid[
                 center_x - 12 : center_x + 13, center_y - 12 : center_y + 13
