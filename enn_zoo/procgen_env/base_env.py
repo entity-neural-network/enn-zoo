@@ -53,6 +53,7 @@ class BaseEnv(Environment):
             distribution_mode=distribution_mode,
         )
         self._init_tiles()
+        self.chunk_width = 5
 
     @abstractmethod
     def _global_feats(self) -> List[str]:
@@ -89,8 +90,8 @@ class BaseEnv(Environment):
                 features=["x", "y"]
                 + [
                     f"{x},{y}={tiletype}"
-                    for x in range(5)
-                    for y in range(5)
+                    for x in range(self.chunk_width)
+                    for y in range(self.chunk_width)
                     for tiletype in tile_types.values()
                 ]
             )
@@ -153,41 +154,71 @@ class BaseEnv(Environment):
                     (0, feats.shape[1] + global_feats.shape[1]), dtype=np.float32
                 )
             entities[name] = feats
+        chunk_rows = min(5, state.grid_width // self.chunk_width)
         if self._tile_types() is not None:
             center_x = round(x - 0.5)
             center_y = round(y - 0.5)
-            if center_x < 12:
-                center_x = 12
-            if center_x + 12 > state.grid_width:
-                center_x = state.grid_width - 12
-            if center_y < 12:
-                center_y = 12
-            if center_y + 12 > state.grid_height:
-                center_y = state.grid_height - 12
-            tilemap = np.zeros((25, 25, len(self._tile_idx_to_id)), dtype=np.float32)
+            offset = self.chunk_width * chunk_rows // 2
+            offset2 = offset if self.chunk_width * chunk_rows % 2 == 0 else offset + 1
+            if center_x < offset:
+                center_x = offset
+            if center_x + offset2 >= state.grid_width:
+                center_x = state.grid_width - offset2
+            if center_y < offset:
+                center_y = offset
+            if center_y + offset2 > state.grid_height:
+                center_y = state.grid_height - offset2
+            tilemap = np.zeros(
+                (
+                    chunk_rows * self.chunk_width,
+                    chunk_rows * self.chunk_width,
+                    len(self._tile_idx_to_id),
+                ),
+                dtype=np.float32,
+            )
             subgrid = state.grid[
-                center_x - 12 : center_x + 13, center_y - 12 : center_y + 13
+                center_x - offset : center_x + offset2,
+                center_y - offset : center_y + offset2,
             ]
             for idx, id in enumerate(self._tile_idx_to_id):
                 tilemap[subgrid == id, idx] = 1.0
             assert (
                 tilemap.sum() == tilemap.shape[0] * tilemap.shape[1]
-            ), "Not all tiles are accounted for, does _tile_types() contain all ids?"
+            ), "Not all tiles are accounted for, does `self._tile_types()` contain all ids that are present in `subgrid`?"
             tilemap = (
-                tilemap.reshape(5, 5, 5, 5, len(self._tile_idx_to_id))
+                tilemap.reshape(
+                    chunk_rows,
+                    self.chunk_width,
+                    chunk_rows,
+                    self.chunk_width,
+                    len(self._tile_idx_to_id),
+                )
                 .transpose(0, 2, 1, 3, 4)
-                .reshape(25, 25 * len(self._tile_idx_to_id))
+                .reshape(
+                    chunk_rows * chunk_rows,
+                    self.chunk_width * self.chunk_width * len(self._tile_idx_to_id),
+                )
             )
             xs = (
-                (np.arange(5, dtype=np.float32) * 5 + 2.5 + center_x - 12)
-                .reshape(1, 5, 1)
-                .repeat(5, axis=0)
-            ).reshape(25, 1)
+                (
+                    np.arange(chunk_rows, dtype=np.float32) * self.chunk_width
+                    + self.chunk_width / 2
+                    + center_x
+                    - offset
+                )
+                .reshape(1, chunk_rows, 1)
+                .repeat(chunk_rows, axis=0)
+            ).reshape(chunk_rows * chunk_rows, 1)
             ys = (
-                (np.arange(5, dtype=np.float32) * 5 + 2.5 + center_x - 12)
-                .reshape(5, 1, 1)
-                .repeat(5, axis=1)
-            ).reshape(25, 1)
+                (
+                    np.arange(chunk_rows, dtype=np.float32) * self.chunk_width
+                    + self.chunk_width / 2
+                    + center_x
+                    - offset
+                )
+                .reshape(chunk_rows, 1, 1)
+                .repeat(chunk_rows, axis=1)
+            ).reshape(chunk_rows * chunk_rows, 1)
             tile_entities = np.concatenate([xs, ys, tilemap], axis=1)
             entities["Tiles"] = tile_entities
         assert (

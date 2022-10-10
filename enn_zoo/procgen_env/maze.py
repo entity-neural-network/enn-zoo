@@ -3,33 +3,34 @@ from typing import Dict, List, Optional
 from enn_zoo.procgen_env.base_env import BaseEnv
 from enn_zoo.procgen_env.deserializer import ByteBuffer
 
-CAVE_FLYER_FEATS: List[str] = []
+# b->write_int(maze_dim);
+# b->write_int(world_dim);
+MAZE_FEATS: List[str] = [
+    "maze_dim",
+    "world_dim",
+]
 
 
-class CaveFlyer(BaseEnv):
+class Maze(BaseEnv):
     def __init__(self, distribution_mode: str = "hard") -> None:
-        super().__init__("caveflyer", distribution_mode)
+        super().__init__("maze", distribution_mode)
 
     def _global_feats(self) -> List[str]:
-        return CAVE_FLYER_FEATS
+        return MAZE_FEATS
 
     def deserialize_global_feats(self, data: ByteBuffer) -> List[float]:
-        return []
+        return [
+            float(data.read_int()),
+            float(data.read_int()),
+        ]
 
     def _entity_types(self) -> Dict[int, str]:
-        return {
-            1: "Goal",
-            2: "Obstacle",
-            3: "Target",
-            4: "PlayerBullet",
-            5: "Enemy",
-            9: "Exhaust",
-            54: "???",
-            1003: "Marker",
-        }
+        # const int GOAL = 2;
+        return {}
 
     def _tile_types(self) -> Optional[Dict[int, str]]:
         return {
-            8: "CaveWall",
+            2: "Goal",
+            51: "Wall",
             100: "Empty",
         }
