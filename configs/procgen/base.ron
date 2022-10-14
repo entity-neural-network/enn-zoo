@@ -1,0 +1,11 @@
+ExperimentConfig(
+    version: 4,
+    total_timesteps: 25000000,
+    net: (
+        translation: (
+            position_features: ["x", "y"],
+            reference_entity: "Player",
+            add_dist_feature: true,
+        ),
+    ),
+)
