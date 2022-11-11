@@ -7,8 +7,8 @@ XpV0(
                 From("nvcr.io/nvidia/pytorch:21.03-py3"),
 
                 // Install Poetry
-                Run("curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -"),
-                Env("PATH", "/root/.poetry/bin:${PATH}"),
+                Run("curl -sSL https://install.python-poetry.org | python3 -"),
+                Env("PATH", "/root/.local/bin:${PATH}"),
 
                 // Install Vulkan drivers (required by Griddly)
                 Run("wget -qO - http://packages.lunarg.com/lunarg-signing-key-pub.asc | apt-key add -"),
@@ -52,8 +52,8 @@ XpV0(
 
                 Run("poetry install"),
                 Run("poetry run pip install setuptools==59.5.0"),
-                Run("poetry run pip install torch==1.10.2+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html"),
-                Run("poetry run pip install torch-scatter -f https://data.pyg.org/whl/torch-1.10.0+cu113.html"),
+                Run("poetry run pip install torch==1.12.0+cu113 -f https://download.pytorch.org/whl/cu113/torch_stable.html"),
+                Run("poetry run pip install torch-scatter -f https://data.pyg.org/whl/torch-1.12.0+cu113.html"),
 
                 Repo(
                     paths: [
