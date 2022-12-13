@@ -11,7 +11,7 @@ ExperimentConfig(
     ),
     total_timesteps: 25000000,
     net: (
-        d_model: 64,
+        d_model: 16,
         n_layer: 2,
         translation: (
             position_features: ["x", "y"],
@@ -20,12 +20,13 @@ ExperimentConfig(
         ),
     ),
     optim: (
-        bs: 8192,
+        bs: 2048,
         micro_bs: 1024,
         lr: 0.01,
+       	anneal_lr: true,
     ),
     ppo: (
-        ent_coef: 0.1,
+        ent_coef: 0.05,
         anneal_entropy: true,
         gamma: 0.999,
     ),
